@@ -1,0 +1,166 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #fae1dd;
+  font-family: 'DM Serif Text', sans-serif;
+  margin: 0;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+h1, .psorpresa {
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: transform 0.65s ease-in-out;
+}
+
+.contenedor {
+  position: relative;
+  max-width: 90vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.superior {
+  position: absolute;
+  border-left: 180px solid transparent;
+  border-right: 180px solid transparent;
+  border-top: 120px solid #f08080;
+  border-bottom: 120px solid transparent;
+  transition: transform 0.75s, opacity 0.75s;
+  transform-origin: top;
+  z-index: 2;
+}
+
+.abrir-superior {
+  transform: rotateX(180deg);
+  opacity: 0;
+}
+
+.mensaje {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: 'Brush Script MT', cursive;
+  font-size: 22px;
+  background: #eae2b7;
+  min-width: 250px;
+  max-width: 90vw;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+  transition: max-height 0.75s ease-in-out, transform 0.75s ease-in-out, opacity 0.75s ease-in-out;
+  border: 2px dotted #b59f3b;
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+
+.abrir-mensaje {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translate(-50%, -100px) scaleX(1.2);
+  z-index: 1;
+}
+
+.mensaje p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.carta {
+  border-left: 180px solid #f8ad9d;
+  border-right: 180px solid #f4978e;
+  border-top: 120px solid transparent;
+  border-bottom: 120px solid #f8ad9d;
+  transition: transform 0.75s ease-in-out;
+}
+
+.bx {
+    position: absolute;
+    top: 90px; /* Ajusta según el tamaño de la carta */
+    left: 48.5%;
+    transform: translateX(-50%);
+    color: #f6406a;
+    font-size: 50px;
+    animation: palpitar 0.6s linear infinite;
+    transition: opacity 0.5s ease;
+    z-index: 3;
+}
+
+.bx-rotada {
+  opacity: 0;
+  animation: none;
+}
+
+.botones {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.boton {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #ff66b2, #ff4081);
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.boton:hover {
+  background-position: 100% 100%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes palpitar {
+  0% { transform: scale(1.07); }
+  80% { transform: scale(1.0); }
+  100% { transform: scale(1.08); }
+}
+
+@media (max-width: 768px) {
+  .superior, .carta {
+    border-left: 120px solid transparent;
+    border-right: 120px solid transparent;
+    border-top: 80px solid #f08080;
+    border-bottom: 80px solid transparent;
+  }
+
+  .carta {
+    border-left-color: #f8ad9d;
+    border-right-color: #f4978e;
+    border-bottom-color: #f8ad9d;
+  }
+
+  .mensaje {
+    font-size: 18px;
+    padding: 1rem;
+  }
+
+  .mensaje p {
+    font-size: 1rem;
+  }
+
+  .bx {
+    top: 60px;
+    right: 100px;
+    font-size: 36px;
+  }
+}
