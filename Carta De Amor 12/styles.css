@@ -1,0 +1,561 @@
+/* Variables de color Prerrafaelita */
+:root {
+  --marron-terroso: #4b3e2f;
+  --verde-musgo-palido: #6d8b74;
+  --dorado-envejecido: #c6aa8f;
+  --purpura-profundo: #6a4e77;
+  --marfil-claro: #ece3d7;
+  --sombra-clara: rgba(0, 0, 0, 0.1);
+  --sombra-oscura: rgba(0, 0, 0, 0.4);
+
+  /* Nuevas variables para efectos de brillo */
+  --glow-light: rgba(255, 255, 200, 0.5); /* Amarillo pálido para el brillo */
+  --glow-strong: rgba(255, 255, 200, 0.8);
+}
+
+/* ASEGURAR QUE HTML Y BODY OCUPEN TODA LA PANTALLA Y PERMITAN SCROLL */
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Evita scroll horizontal */
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita scroll horizontal */
+  position: relative; /* Necesario para el contexto de posicionamiento */
+  font-family: 'EB Garamond', serif; /* Fuentes por defecto */
+  line-height: 1.8;
+}
+
+/* Estilos para el modo nocturno (activo por defecto en body) */
+body.modo-oscuro {
+  color: var(--marfil-claro);
+  background-color: #1a1a1a; /* Fondo muy oscuro para el cielo nocturno */
+  background-image: none; /* Asegura que no haya textura de pergamino */
+  overflow-y: scroll; /* Asegura el scroll vertical si el contenido lo excede */
+}
+
+/* Contenedor para las animaciones de fondo */
+#animation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Contenedor principal de la exposición */
+.contenedor {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: rgba(43, 43, 43, 0.8); /* Fondo ligeramente transparente */
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--purpura-profundo); /* Mantenemos este borde principal */
+  position: relative;
+  z-index: 1;
+
+  /* Nuevo: Filtro de fondo sutil */
+  backdrop-filter: blur(2px) brightness(0.8);
+  -webkit-backdrop-filter: blur(2px) brightness(0.8); /* Para compatibilidad con Safari */
+}
+
+/* Decoración con pseudo-elementos del contenedor */
+/* *** CAMBIO CLAVE AQUÍ: BORDER TRANSPARENTE, MANTENEMOS LA SOMBRA INTERIOR *** */
+.contenedor::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+  border: 10px double transparent; /* <--- Borde transparente */
+  pointer-events: none;
+  opacity: 0.6; /* Podemos mantener la opacidad para la sombra interior */
+  z-index: -1;
+  box-shadow: inset 0 0 30px var(--purpura-profundo); /* Sombra interior se mantiene */
+}
+
+header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--purpura-profundo);
+}
+
+.titulo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3em;
+  color: var(--dorado-envejecido);
+  margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: .15em solid var(--purpura-profundo);
+  animation:
+    typing 3.5s steps(30, end) forwards,
+    blink-caret .75s step-end infinite;
+  /* Nuevo: Brillo sutil */
+  text-shadow: 0 0 5px var(--glow-light), 0 0 10px var(--glow-light);
+}
+
+.subtitulo {
+  font-family: 'Playfair Display SC', serif;
+  font-size: 1.2em;
+  color: var(--marfil-claro);
+  font-style: italic;
+}
+
+/* Sección Carta */
+.carta {
+  background-color: rgba(58, 58, 58, 0.9); /* Fondo ligeramente más opaco */
+  padding: 40px;
+  margin: 60px 40px;
+  border: 1px solid var(--purpura-profundo);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInTranslate 1.5s ease-out 1s forwards;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.carta h2 {
+  font-family: 'Playfair Display SC', serif;
+  color: var(--dorado-envejecido);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  position: relative;
+  /* Nuevo: Brillo sutil */
+  text-shadow: 0 0 4px var(--glow-light), 0 0 8px var(--glow-light);
+}
+
+.carta h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background-color: var(--purpura-profundo);
+}
+
+.carta p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15em;
+  text-align: justify;
+  margin-bottom: 25px;
+  line-height: 2;
+  color: var(--marfil-claro);
+}
+
+.carta p.firma {
+  text-align: right;
+  margin-top: 40px;
+  font-style: italic;
+  color: var(--verde-musgo-palido);
+}
+
+/* Animación de entrada de la carta */
+@keyframes fadeInTranslate {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Galería de Arte */
+.galeria-de-arte {
+  margin-top: 80px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.galeria-de-arte h2 {
+  font-family: 'Playfair Display SC', serif;
+  color: var(--dorado-envejecido);
+  margin-bottom: 40px;
+  font-size: 2.2em;
+  position: relative;
+  /* Nuevo: Brillo sutil */
+  text-shadow: 0 0 4px var(--glow-light), 0 0 8px var(--glow-light);
+}
+
+.galeria-de-arte h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background-color: var(--purpura-profundo);
+}
+
+.grid-galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.grid-galeria figure {
+  background-color: rgba(58, 58, 58, 0.9); /* Fondo ligeramente más opaco */
+  border: 1px solid var(--purpura-profundo);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.08);
+  margin: 0;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-galeria figure::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid var(--purpura-profundo);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.grid-galeria figure:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 25px rgba(255, 255, 255, 0.15);
+}
+
+.grid-galeria img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border: 2px solid var(--verde-musgo-palido);
+}
+
+.grid-galeria figcaption {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1em;
+  color: var(--marfil-claro);
+  margin-top: 15px;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Citas Prerrafaelitas */
+.citas-prerrafaelitas {
+  margin: 80px auto;
+  max-width: 800px;
+  padding: 40px;
+  background-color: rgba(74, 58, 90, 0.9); /* Fondo más opaco */
+  color: var(--marfil-claro);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--dorado-envejecido);
+  position: relative;
+  z-index: 2;
+}
+
+.citas-prerrafaelitas::before {
+  content: '“';
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 6em;
+  color: var(--dorado-envejecido);
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  opacity: 0.3;
+}
+
+.citas-prerrafaelitas::after {
+  content: '”';
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 6em;
+  color: var(--dorado-envejecido);
+  position: absolute;
+  bottom: -20px;
+  right: 20px;
+  opacity: 0.3;
+}
+
+.citas-prerrafaelitas h3 {
+  font-family: 'Playfair Display SC', serif;
+  text-align: center;
+  color: var(--dorado-envejecido);
+  margin-bottom: 30px;
+  font-size: 1.8em;
+  /* Nuevo: Brillo sutil */
+  text-shadow: 0 0 3px var(--glow-light), 0 0 6px var(--glow-light);
+}
+
+.citas-prerrafaelitas blockquote {
+  margin: 0 0 25px 0;
+  padding: 0 20px;
+  font-style: italic;
+  border-left: 3px solid var(--marfil-claro);
+}
+
+.citas-prerrafaelitas blockquote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: var(--marfil-claro);
+}
+
+.citas-prerrafaelitas cite {
+  display: block;
+  text-align: right;
+  font-size: 0.9em;
+  color: var(--verde-musgo-palido);
+  margin-top: 10px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--purpura-profundo);
+  color: var(--marfil-claro);
+  font-size: 0.9em;
+  font-family: 'Cormorant Garamond', serif;
+  position: relative;
+  z-index: 2;
+}
+
+/* Lightbox Modal */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.lightbox.visible {
+  display: flex;
+}
+
+.lightbox .cerrar {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.lightbox .cerrar:hover,
+.lightbox .cerrar:focus {
+  color: #bbb;
+  text-decoration: none;
+}
+
+.lightbox .imagen-ampliada {
+  max-width: 90%;
+  max-height: 80%;
+  display: block;
+  margin: 20px auto;
+  border: 5px solid var(--dorado-envejecido);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease-out;
+}
+
+.lightbox .descripcion-obra {
+  color: var(--marfil-claro);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3em;
+  margin-top: 15px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Botón flotante para volver al inicio */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: var(--purpura-profundo);
+  color: var(--marfil-claro);
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: none;
+}
+
+#scrollToTopBtn:hover {
+  background-color: var(--verde-musgo-palido);
+  transform: translateY(-3px);
+}
+
+/* Animación de hojas cayendo (ocultas en modo nocturno) */
+.leaf {
+  display: none;
+}
+
+/* Estrellas Fugaces */
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white;
+  animation: shoot 5s linear infinite;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  --start-x: 0;
+  --start-y: 0;
+  --end-x: 0;
+  --end-y: 0;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(calc(var(--start-x, 0) * 1vw), calc(var(--start-y, 0) * 1vh)) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  30% {
+    transform: translate(calc(var(--end-x, 100) * 1vw), calc(var(--end-y, 100) * 1vh)) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Luciérnagas */
+.firefly {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background-color: #ffda66;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ffda66, 0 0 15px #ffda66, 0 0 25px rgba(255, 218, 102, 0.7);
+  animation:
+    moveFirefly 20s linear infinite alternate,
+    glowFirefly 2.5s ease-in-out infinite alternate;
+  opacity: 0;
+  z-index: 1; /* Relative to #animation-container, so they are above stars */
+  pointer-events: none;
+  --firefly-x: 0;
+  --firefly-y: 0;
+}
+
+@keyframes moveFirefly {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(calc(var(--move-x1, 50) * 1vw), calc(var(--move-y1, 30) * 1vh)); }
+  50% { transform: translate(calc(var(--move-x2, 20) * 1vw), calc(var(--move-y2, 70) * 1vh)); }
+  75% { transform: translate(calc(var(--move-x3, 80) * 1vw), calc(var(--move-y3, 10) * 1vh)); }
+  100% { transform: translate(calc(var(--move-x4, 0) * 1vw), calc(var(--move-y4, 0) * 1vh)); }
+}
+
+@keyframes glowFirefly {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contenedor {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .titulo {
+    font-size: 2.2em;
+  }
+
+  .subtitulo {
+    font-size: 1em;
+  }
+
+  .carta {
+    margin: 30px 15px;
+    padding: 25px;
+  }
+
+  .carta h2,
+  .galeria-de-arte h2 {
+    font-size: 1.8em;
+  }
+
+  .carta p {
+    font-size: 1em;
+    line-height: 1.6;
+  }
+
+  .grid-galeria {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .lightbox .imagen-ampliada {
+    max-width: 95%;
+    max-height: 75%;
+  }
+
+  .lightbox .descripcion-obra {
+    font-size: 1em;
+  }
+
+  .citas-prerrafaelitas {
+    margin: 40px auto;
+    padding: 20px;
+  }
+
+  #scrollToTopBtn {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 1.8em;
+  }
+}
